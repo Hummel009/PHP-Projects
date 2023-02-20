@@ -1,33 +1,35 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Determine Data Types</title>
-</head>
-<body>
-  <h1>Determine Data Types</h1>
-
-  <?php
-  $values = isset($_POST['values']) ? $_POST['values'] : '';
-
-  if (empty($values)) {
-    echo "<p>Please enter a set of values separated by commas.</p>";
-  } else {
-    $valueList = explode(',', $values);
-
-    echo "<p>The data types of the input values are:</p>";
-    echo "<ul>";
-    foreach ($valueList as $value) {
-      $type = gettype($value);
-      echo "<li>$value - $type</li>";
-    }
-    echo "</ul>";
-  }
-  ?>
-
-  <form method="post" action="">
-    <label for="values">Enter a set of values (separated by commas):</label>
-    <input type="text" id="values" name="values" value="<?php echo $values; ?>">
-    <button type="submit">Determine Data Types</button>
-  </form>
-</body>
+  <head>
+    <meta charset="utf-8">
+    <title>Determine Data Types</title>
+  </head>
+  <body>
+    <h1>Determine Data Types</h1>
+    <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
+      <label for="params">Enter a set of parameters:</label>
+      <br>
+      <textarea name="params" id="params" rows="5" cols="50"></textarea>
+      <br>
+      <input type="submit" value="Submit">
+    </form>
+    <?php
+      if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $params = $_POST["params"];
+        $lines = explode("\n", $params);
+        foreach ($lines as $line) {
+          $line = trim($line);
+          if (is_numeric($line)) {
+            if (strpos($line, ".") !== false) {
+              echo $line . " is a fractional number.<br>";
+            } else {
+              echo $line . " is an integer.<br>";
+            }
+          } else {
+            echo $line . " is a string.<br>";
+          }
+        }
+      }
+    ?>
+  </body>
 </html>

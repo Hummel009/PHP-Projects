@@ -1,51 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Display Multidimensional Array</title>
+	<title>Display Multidimensional Array</title>
+	<style>
+		.red { color: red; }
+		.blue { color: blue; }
+		.green { color: green; }
+		.purple { color: purple; }
+		.yellow { color: yellow; }
+	</style>
 </head>
 <body>
-  <h1>Display Multidimensional Array</h1>
 
-  <?php
-  $data = isset($_POST['data']) ? $_POST['data'] : '';
+<?php
+// Define a multidimensional array
+$multiArray = array(
+	"red" => array(
+		"blue" => array(
+			"green" => array(
+				"purple" => array(
+					"yellow" => "This is the deepest level"
+				)
+			)
+		)
+	)
+);
 
-  if (empty($data)) {
-    echo "<p>Please enter a valid JSON string.</p>";
-  } else {
-    $array = json_decode($data, true);
+// Recursive function to display the array elements with different colors based on the array level
+function displayArray($array, $level = 1) {
+	foreach($array as $key => $value) {
+		$class = "";
+		switch($level) {
+			case 1: $class = "red"; break;
+			case 2: $class = "blue"; break;
+			case 3: $class = "green"; break;
+			case 4: $class = "purple"; break;
+			default: $class = "yellow"; break;
+		}
 
-    if (is_null($array)) {
-      echo "<p>Please enter a valid JSON string.</p>";
-    } else {
-      echo "<h2>Array:</h2>";
-      echo "<pre>";
-      var_dump($array);
-      echo "</pre>";
+		if (is_array($value)) {
+			echo "<span class=\"$class\">$key:</span><br/>";
+			displayArray($value, $level + 1);
+		} else {
+			echo "<span class=\"$class\">$key:</span> $value<br/>";
+		}
+	}
+}
 
-      echo "<h2>Display:</h2>";
-      displayArray($array);
-    }
-  }
+// Call the function to display the multidimensional array
+displayArray($multiArray);
+?>
 
-  function displayArray($array, $level = 0) {
-    $colors = array('red', 'blue', 'green', 'purple', 'yellow');
-    foreach ($array as $key => $value) {
-      $color = isset($colors[$level]) ? $colors[$level] : 'black';
-      echo "<div style='color: $color;'>$key:</div>";
-
-      if (is_array($value)) {
-        displayArray($value, $level + 1);
-      } else {
-        echo "<div style='color: $color; padding-left: 20px;'>$value</div>";
-      }
-    }
-  }
-  ?>
-
-  <form method="post" action="">
-    <label for="data">Enter a JSON string:</label>
-    <textarea id="data" name="data"><?php echo $data; ?></textarea>
-    <button type="submit">Display Multidimensional Array</button>
-  </form>
 </body>
 </html>
