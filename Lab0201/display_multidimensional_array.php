@@ -15,7 +15,18 @@
 <?php
 // Define a multidimensional array
 $multiArray = array(
-	"red" => array(
+	"red1" => array(
+		"blue" => array(
+			"green" => array(
+				"purple" => array(
+					"yellow" => array(
+						"yet another yellow" => "This is the deepest level"
+					)
+				)
+			)
+		)
+	),
+	"red2" => array(
 		"blue" => array(
 			"green" => array(
 				"purple" => array(
