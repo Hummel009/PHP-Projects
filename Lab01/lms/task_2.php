@@ -3,6 +3,13 @@
 <head>
   <title>Generate HTML Table</title>
 </head>
+<style>
+		table, th, td {
+			border: 1px solid black;
+			border-collapse: collapse;
+			padding: 5px;
+		}
+</style>
 <body>
   <h1>Generate HTML Table</h1>
 
@@ -21,7 +28,7 @@
     $html .= "<thead><tr><th>#</th></tr></thead>";
     $html .= "<tbody>";
     for ($i = 1; $i <= $numRows; $i++) {
-      $html .= "<tr><td>$i</td></tr>";
+      $html .= "<tr><td>$i</td><td>Some Text</td></tr>";
     }
     $html .= "</tbody>";
     $html .= "</table>";
